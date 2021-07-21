@@ -1,9 +1,9 @@
 <?php
 
-namespace C201\Ddd\Commands\Application;
+namespace Becklyn\Ddd\Commands\Application;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-05
  */
 interface CommandBus

@@ -1,11 +1,11 @@
 <?php
 
-namespace C201\Ddd\Tests\Identity\Domain;
+namespace Becklyn\Ddd\Tests\Identity\Domain;
 
-use C201\Ddd\Identity\Domain\AbstractAggregateId;
+use Becklyn\Ddd\Identity\Domain\AbstractAggregateId;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-04-06
  */
 class AbstractAggregateTestProxy2Id extends AbstractAggregateId

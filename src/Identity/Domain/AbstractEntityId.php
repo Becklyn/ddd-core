@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Identity\Domain;
+namespace Becklyn\Ddd\Identity\Domain;
 
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-10-19
  */
 abstract class AbstractEntityId implements EntityId

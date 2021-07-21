@@ -1,13 +1,13 @@
 <?php
 
-namespace C201\Ddd\Commands\Application;
+namespace Becklyn\Ddd\Commands\Application;
 
-use C201\Ddd\Events\Domain\EventProvider;
-use C201\Ddd\Events\Domain\EventRegistry;
-use C201\Ddd\Transactions\Application\TransactionManager;
+use Becklyn\Ddd\Events\Domain\EventProvider;
+use Becklyn\Ddd\Events\Domain\EventRegistry;
+use Becklyn\Ddd\Transactions\Application\TransactionManager;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-27
  */
 abstract class CommandHandler

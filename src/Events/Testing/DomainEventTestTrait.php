@@ -1,20 +1,20 @@
 <?php
 
-namespace C201\Ddd\Events\Testing;
+namespace Becklyn\Ddd\Events\Testing;
 
-use C201\Ddd\Events\Application\EventBus;
-use C201\Ddd\Events\Domain\AggregateEventStream;
-use C201\Ddd\Events\Domain\DomainEvent;
-use C201\Ddd\Events\Domain\EventId;
-use C201\Ddd\Events\Domain\EventProvider;
-use C201\Ddd\Events\Domain\EventRegistry;
-use C201\Ddd\Events\Domain\EventStore;
+use Becklyn\Ddd\Events\Application\EventBus;
+use Becklyn\Ddd\Events\Domain\AggregateEventStream;
+use Becklyn\Ddd\Events\Domain\DomainEvent;
+use Becklyn\Ddd\Events\Domain\EventId;
+use Becklyn\Ddd\Events\Domain\EventProvider;
+use Becklyn\Ddd\Events\Domain\EventRegistry;
+use Becklyn\Ddd\Events\Domain\EventStore;
 use Ramsey\Uuid\Uuid;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-07-23
  */
 trait DomainEventTestTrait

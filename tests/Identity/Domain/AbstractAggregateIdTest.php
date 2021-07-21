@@ -1,5 +1,5 @@
 <?php
-namespace C201\Ddd\Tests\Identity\Domain;
+namespace Becklyn\Ddd\Tests\Identity\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -7,7 +7,7 @@ use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-04-06
  */
 class AbstractAggregateIdTest extends TestCase

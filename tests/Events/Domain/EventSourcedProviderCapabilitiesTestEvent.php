@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Tests\Events\Domain;
+namespace Becklyn\Ddd\Tests\Events\Domain;
 
-use C201\Ddd\Events\Domain\AbstractDomainEvent;
-use C201\Ddd\Identity\Domain\AggregateId;
+use Becklyn\Ddd\Events\Domain\AbstractDomainEvent;
+use Becklyn\Ddd\Identity\Domain\AggregateId;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-10-19
  */
 class EventSourcedProviderCapabilitiesTestEvent extends AbstractDomainEvent

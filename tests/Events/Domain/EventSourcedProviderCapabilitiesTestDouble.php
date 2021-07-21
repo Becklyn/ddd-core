@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Tests\Events\Domain;
+namespace Becklyn\Ddd\Tests\Events\Domain;
 
-use C201\Ddd\Events\Domain\EventProvider;
-use C201\Ddd\Events\Domain\EventSourcedProviderCapabilities;
+use Becklyn\Ddd\Events\Domain\EventProvider;
+use Becklyn\Ddd\Events\Domain\EventSourcedProviderCapabilities;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-10-19
  */
 class EventSourcedProviderCapabilitiesTestDouble implements EventProvider

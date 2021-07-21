@@ -1,11 +1,11 @@
 <?php
 
-namespace C201\Ddd\Events\Domain;
+namespace Becklyn\Ddd\Events\Domain;
 
 use Ramsey\Uuid\Uuid;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-07-29
  */
 trait EventCreatorCapabilities

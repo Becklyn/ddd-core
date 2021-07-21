@@ -1,9 +1,9 @@
 <?php
 
-namespace C201\Ddd\Tests\Identity\Domain;
+namespace Becklyn\Ddd\Tests\Identity\Domain;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-07-28
  */
 class AbstractAggregateTestProxy

@@ -1,17 +1,17 @@
 <?php
 
-namespace C201\Ddd\Tests\Events\Domain;
+namespace Becklyn\Ddd\Tests\Events\Domain;
 
-use C201\Ddd\Events\Domain\DomainEvent;
-use C201\Ddd\Events\Domain\EventProvider;
-use C201\Ddd\Events\Domain\EventRegistry;
-use C201\Ddd\Events\Domain\EventStore;
+use Becklyn\Ddd\Events\Domain\DomainEvent;
+use Becklyn\Ddd\Events\Domain\EventProvider;
+use Becklyn\Ddd\Events\Domain\EventRegistry;
+use Becklyn\Ddd\Events\Domain\EventStore;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-04-06
  */
 class EventRegistryTest extends TestCase

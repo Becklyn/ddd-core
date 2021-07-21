@@ -1,9 +1,9 @@
 <?php
 
-namespace C201\Ddd\Events\Domain;
+namespace Becklyn\Ddd\Events\Domain;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-07-23
  */
 trait EventSourcedProviderCapabilities

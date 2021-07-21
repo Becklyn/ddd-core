@@ -1,16 +1,16 @@
 <?php
 
-namespace C201\Ddd\Tests\Events\Domain;
+namespace Becklyn\Ddd\Tests\Events\Domain;
 
-use C201\Ddd\Events\Domain\AbstractDomainEvent;
-use C201\Ddd\Events\Domain\DomainEvent;
-use C201\Ddd\Events\Domain\EventId;
+use Becklyn\Ddd\Events\Domain\AbstractDomainEvent;
+use Becklyn\Ddd\Events\Domain\DomainEvent;
+use Becklyn\Ddd\Events\Domain\EventId;
 use Ramsey\Uuid\Uuid;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-04-06
  */
 class AbstractDomainEventTest extends TestCase

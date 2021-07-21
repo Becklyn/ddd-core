@@ -1,9 +1,9 @@
 <?php
 
-namespace C201\Ddd\Transactions\Application;
+namespace Becklyn\Ddd\Transactions\Application;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-07
  */
 interface TransactionManager

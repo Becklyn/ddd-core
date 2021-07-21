@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Tests\Commands\Application;
+namespace Becklyn\Ddd\Tests\Commands\Application;
 
-use C201\Ddd\Commands\Testing\CommandHandlerTestTrait;
-use C201\Ddd\Events\Domain\EventProvider;
-use C201\Ddd\Events\Domain\EventRegistry;
+use Becklyn\Ddd\Commands\Testing\CommandHandlerTestTrait;
+use Becklyn\Ddd\Events\Domain\EventProvider;
+use Becklyn\Ddd\Events\Domain\EventRegistry;
 use Ramsey\Uuid\Uuid;
-use C201\Ddd\Transactions\Application\TransactionManager;
+use Becklyn\Ddd\Transactions\Application\TransactionManager;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;

@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Transactions\Testing;
+namespace Becklyn\Ddd\Transactions\Testing;
 
-use C201\Ddd\Transactions\Application\TransactionManager;
+use Becklyn\Ddd\Transactions\Application\TransactionManager;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-07-25
  */
 trait TransactionManagerTestTrait

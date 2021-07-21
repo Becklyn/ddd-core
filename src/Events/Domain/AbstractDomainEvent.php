@@ -1,11 +1,11 @@
 <?php
 
-namespace C201\Ddd\Events\Domain;
+namespace Becklyn\Ddd\Events\Domain;
 
-use C201\Support\Collections\IterableToCollectionConstructionTrait;
+use Becklyn\Utilities\Collections\IterableToCollectionConstructionTrait;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-05
  */
 abstract class AbstractDomainEvent implements DomainEvent

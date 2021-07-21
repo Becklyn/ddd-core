@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Tests\Commands\Application;
+namespace Becklyn\Ddd\Tests\Commands\Application;
 
-use C201\Ddd\Commands\Application\CommandHandler;
-use C201\Ddd\Events\Domain\EventProvider;
+use Becklyn\Ddd\Commands\Application\CommandHandler;
+use Becklyn\Ddd\Events\Domain\EventProvider;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-10-19
  */
 class DefaultPostRollbackCommandHandlerTestDouble extends CommandHandler

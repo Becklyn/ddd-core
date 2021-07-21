@@ -1,13 +1,13 @@
 <?php
 
-namespace C201\Ddd\Commands\Testing;
+namespace Becklyn\Ddd\Commands\Testing;
 
-use C201\Ddd\Commands\Application\CommandHandler;
-use C201\Ddd\Events\Testing\DomainEventTestTrait;
-use C201\Ddd\Transactions\Testing\TransactionManagerTestTrait;
+use Becklyn\Ddd\Commands\Application\CommandHandler;
+use Becklyn\Ddd\Events\Testing\DomainEventTestTrait;
+use Becklyn\Ddd\Transactions\Testing\TransactionManagerTestTrait;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-27
  */
 trait CommandHandlerTestTrait

@@ -1,9 +1,8 @@
 {
-    "name": "201created/ddd-core",
+    "name": "becklyn/ddd-core",
     "description": "DDD framework for PHP",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.0",
     "authors": [
         {
             "name": "Christoph Hautzinger",
@@ -16,10 +15,10 @@
     ],
     "require": {
         "php": ">=7.4",
-        "201created/support": "^0.1.2",
+        "becklyn/utilities": "^1.0",
         "ramsey/uuid": "^4.0",
-        "tightenco/collect": "^7.4",
-        "webmozart/assert": "^1.7"
+        "illuminate/collections": "^8.12",
+        "webmozart/assert": "^1.9"
     },
     "require-dev": {
         "phpspec/prophecy-phpunit": "^2.0",
@@ -27,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "C201\\Ddd\\": "src/"
+            "Becklyn\\Ddd\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "C201\\Ddd\\Tests\\": "tests/"
+            "Becklyn\\Ddd\\Tests\\": "tests/"
         }
     }
 }

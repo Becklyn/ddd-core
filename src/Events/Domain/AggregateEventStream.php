@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Events\Domain;
+namespace Becklyn\Ddd\Events\Domain;
 
-use C201\Ddd\Identity\Domain\AggregateId;
-use Tightenco\Collect\Support\Collection;
+use Becklyn\Ddd\Identity\Domain\AggregateId;
+use Illuminate\Support\Collection;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-11-20
  */
 class AggregateEventStream

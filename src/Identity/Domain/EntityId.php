@@ -1,9 +1,9 @@
 <?php
 
-namespace C201\Ddd\Identity\Domain;
+namespace Becklyn\Ddd\Identity\Domain;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-10-19
  */
 interface EntityId

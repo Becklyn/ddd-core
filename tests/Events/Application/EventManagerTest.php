@@ -1,11 +1,11 @@
 <?php
 
-namespace C201\Ddd\Tests\Events\Application;
+namespace Becklyn\Ddd\Tests\Events\Application;
 
-use C201\Ddd\Events\Application\EventBus;
-use C201\Ddd\Events\Application\EventManager;
-use C201\Ddd\Events\Domain\DomainEvent;
-use C201\Ddd\Events\Domain\EventRegistry;
+use Becklyn\Ddd\Events\Application\EventBus;
+use Becklyn\Ddd\Events\Application\EventManager;
+use Becklyn\Ddd\Events\Domain\DomainEvent;
+use Becklyn\Ddd\Events\Domain\EventRegistry;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;

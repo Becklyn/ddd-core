@@ -1,16 +1,16 @@
 <?php
 
-namespace C201\Ddd\Tests\Events\Domain;
+namespace Becklyn\Ddd\Tests\Events\Domain;
 
-use C201\Ddd\Events\Domain\AggregateEventStream;
-use C201\Ddd\Events\Testing\DomainEventTestTrait;
-use C201\Ddd\Identity\Domain\AbstractAggregateId;
+use Becklyn\Ddd\Events\Domain\AggregateEventStream;
+use Becklyn\Ddd\Events\Testing\DomainEventTestTrait;
+use Becklyn\Ddd\Identity\Domain\AbstractAggregateId;
+use Illuminate\Support\Collection;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-10-19
  */
 class EventSourcedProviderCapabilitiesTest extends TestCase

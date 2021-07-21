@@ -1,13 +1,13 @@
 <?php
 
-namespace C201\Ddd\Commands\Testing;
+namespace Becklyn\Ddd\Commands\Testing;
 
-use C201\Ddd\Commands\Application\CommandBus;
+use Becklyn\Ddd\Commands\Application\CommandBus;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-07-28
  */
 trait CommandBusTestTrait

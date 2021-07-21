@@ -1,12 +1,12 @@
 <?php
 
-namespace C201\Ddd\Events\Domain;
+namespace Becklyn\Ddd\Events\Domain;
 
 /**
  * This service must be used in domain services to gather all of the events raised during their execution. The event manager will eventually dequeue the
  * registry and dispatch all registered events to an event bus after the application transaction is committed.
  *
- * @author Marko Vujnovic <mv@201created.de>
+ * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-05
  */
 class EventRegistry implements EventProvider
