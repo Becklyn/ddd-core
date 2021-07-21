@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractDomainEventTest extends TestCase
 {
-    public function testRaisedTsReturnsRaisedTsPassedToConstructor()
+    public function testRaisedTsReturnsRaisedTsPassedToConstructor(): void
     {
         $raisedTs = new \DateTimeImmutable();
         /** @var MockObject|DomainEvent $event */
@@ -23,7 +23,7 @@ class AbstractDomainEventTest extends TestCase
         $this->assertSame($raisedTs, $event->raisedTs());
     }
 
-    public function testIdReturnsIdPassedToConstructor()
+    public function testIdReturnsIdPassedToConstructor(): void
     {
         $id = EventId::fromString(Uuid::uuid4());
         /** @var MockObject|DomainEvent $event */

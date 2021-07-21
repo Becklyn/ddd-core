@@ -11,13 +11,10 @@ use Becklyn\Ddd\Events\Domain\EventProvider;
  */
 class CommandHandlerTestDouble extends CommandHandler
 {
-    private CommandHandlerTestExecuteExecutor $executeExecutor;
-    private CommandHandlerTestPostRollbackExecutor $postRollbackExecutor;
-
-    public function __construct(CommandHandlerTestExecuteExecutor $executeExecutor, CommandHandlerTestPostRollbackExecutor $postRollbackExecutor)
-    {
-        $this->executeExecutor = $executeExecutor;
-        $this->postRollbackExecutor = $postRollbackExecutor;
+    public function __construct(
+        private CommandHandlerTestExecuteExecutor $executeExecutor,
+        private CommandHandlerTestPostRollbackExecutor $postRollbackExecutor,
+    ) {
     }
 
     public function handle(CommandHandlerTestCommand $command): void

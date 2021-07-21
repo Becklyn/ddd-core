@@ -15,10 +15,8 @@ class CommandHandlerTest extends TestCase
     use ProphecyTrait;
     use CommandHandlerTestTrait;
 
-    /** @var ObjectProphecy|CommandHandlerTestExecuteExecutor */
-    private ObjectProphecy $executeExecutor;
-    /** @var ObjectProphecy|CommandHandlerTestPostRollbackExecutor */
-    private ObjectProphecy $postRollbackExecutor;
+    private ObjectProphecy|CommandHandlerTestExecuteExecutor $executeExecutor;
+    private ObjectProphecy|CommandHandlerTestPostRollbackExecutor $postRollbackExecutor;
 
     /** @var CommandHandlerTestDouble */
     protected $fixture;

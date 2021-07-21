@@ -11,10 +11,7 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 trait TransactionManagerTestTrait
 {
-    /**
-     * @var TransactionManager|ObjectProphecy
-     */
-    protected $transactionManager;
+    protected TransactionManager|ObjectProphecy $transactionManager;
 
     protected function initTransactionManagerTestTrait(): void
     {

@@ -12,14 +12,14 @@ use PHPUnit\Framework\TestCase;
  */
 class EventIdTest extends TestCase
 {
-    public function testFromStringAcceptsUuid()
+    public function testFromStringAcceptsUuid(): void
     {
         $uuid = Uuid::uuid4();
         $id = EventId::fromString($uuid);
         $this->assertEquals($uuid, $id->asString());
     }
 
-    public function testFromStringThrowsExceptionForNonUuid()
+    public function testFromStringThrowsExceptionForNonUuid(): void
     {
         $notUuid = 'foo';
         $this->expectException(\Exception::class);

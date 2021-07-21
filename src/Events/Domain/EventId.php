@@ -10,13 +10,9 @@ use Webmozart\Assert\Assert;
  */
 final class EventId
 {
-    private string $id;
-
-    private function __construct(string $id)
+    private function __construct(private string $id)
     {
         Assert::uuid($id);
-
-        $this->id = $id;
     }
 
     public static function fromString(string $id): EventId

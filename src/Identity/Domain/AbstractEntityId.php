@@ -11,20 +11,18 @@ use Webmozart\Assert\Assert;
  */
 abstract class AbstractEntityId implements EntityId
 {
-    protected string $id;
-
-    protected function __construct(string $id)
-    {
+    protected function __construct(
+        protected string $id,
+    ) {
         Assert::uuid($id);
-        $this->id = $id;
     }
 
-    public static function fromString(string $id): self
+    public static function fromString(string $id): static
     {
         return new static($id);
     }
 
-    public static function next(): self
+    public static function next(): static
     {
         return new static(Uuid::uuid4());
     }

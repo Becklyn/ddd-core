@@ -18,12 +18,9 @@ class EventRegistryTest extends TestCase
 {
     use ProphecyTrait;
 
-    private EventRegistry $fixture;
+    private ObjectProphecy|EventStore $eventStore;
 
-    /**
-     * @var ObjectProphecy|EventStore
-     */
-    private $eventStore;
+    private EventRegistry $fixture;
 
     protected function setUp(): void
     {
@@ -31,7 +28,7 @@ class EventRegistryTest extends TestCase
         $this->fixture = new EventRegistry($this->eventStore->reveal());
     }
 
-    public function testRegisterEvent()
+    public function testRegisterEvent(): void
     {
         $event = $this->prophesize(DomainEvent::class)->reveal();
         $this->fixture->registerEvent($event);
@@ -41,7 +38,7 @@ class EventRegistryTest extends TestCase
         $this->eventStore->append($event)->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testDequeueProviderAndRegister()
+    public function testDequeueProviderAndRegister(): void
     {
         $event = $this->prophesize(DomainEvent::class)->reveal();
         /** @var EventProvider|ObjectProphecy $provider */

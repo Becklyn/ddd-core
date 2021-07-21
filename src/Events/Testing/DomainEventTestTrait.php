@@ -18,12 +18,9 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 trait DomainEventTestTrait
 {
-    /** @var ObjectProphecy|EventRegistry */
-    protected ObjectProphecy $eventRegistry;
-    /** @var ObjectProphecy|EventBus */
-    protected ObjectProphecy $eventBus;
-    /** @var ObjectProphecy|EventStore */
-    protected ObjectProphecy $eventStore;
+    protected ObjectProphecy|EventRegistry $eventRegistry;
+    protected ObjectProphecy|EventBus $eventBus;
+    protected ObjectProphecy|EventStore $eventStore;
 
     protected function initDomainEventTestTrait(): void
     {

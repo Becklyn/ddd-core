@@ -11,11 +11,9 @@ use Becklyn\Ddd\Events\Domain\EventProvider;
  */
 class DefaultPostRollbackCommandHandlerTestDouble extends CommandHandler
 {
-    private CommandHandlerTestExecuteExecutor $executeExecutor;
-
-    public function __construct(CommandHandlerTestExecuteExecutor $executeExecutor)
-    {
-        $this->executeExecutor = $executeExecutor;
+    public function __construct(
+        private CommandHandlerTestExecuteExecutor $executeExecutor,
+    ) {
     }
 
     public function handle(CommandHandlerTestCommand $command): void

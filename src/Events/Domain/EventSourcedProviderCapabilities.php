@@ -22,7 +22,7 @@ trait EventSourcedProviderCapabilities
         $this->$applicator($event);
     }
 
-    public static function reconstitute(AggregateEventStream $eventStream): self
+    public static function reconstitute(AggregateEventStream $eventStream): static
     {
         $provider = new static();
         foreach ($eventStream->events() as $event) {

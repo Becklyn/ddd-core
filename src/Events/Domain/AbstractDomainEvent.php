@@ -12,14 +12,10 @@ abstract class AbstractDomainEvent implements DomainEvent
 {
     use IterableToCollectionConstructionTrait;
 
-    protected EventId $id;
-
-    protected \DateTimeImmutable $raisedTs;
-
-    public function __construct(EventId $id, \DateTimeImmutable $raisedTs)
-    {
-        $this->id = $id;
-        $this->raisedTs = $raisedTs;
+    public function __construct(
+        protected EventId $id,
+        protected \DateTimeImmutable $raisedTs,
+    ) {
     }
 
     public function id(): EventId

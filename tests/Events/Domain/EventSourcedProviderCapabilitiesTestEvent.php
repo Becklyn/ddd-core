@@ -13,11 +13,9 @@ class EventSourcedProviderCapabilitiesTestEvent extends AbstractDomainEvent
 {
     public function aggregateId(): AggregateId
     {
-        // TODO: Implement aggregateId() method.
     }
 
     public function aggregateType(): string
     {
-        // TODO: Implement aggregateType() method.
     }
 }

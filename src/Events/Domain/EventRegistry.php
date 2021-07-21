@@ -13,11 +13,9 @@ class EventRegistry implements EventProvider
 {
     use EventProviderCapabilities;
 
-    private EventStore $eventStore;
-
-    public function __construct(EventStore $eventStore)
-    {
-        $this->eventStore = $eventStore;
+    public function __construct(
+        private EventStore $eventStore,
+    ) {
     }
 
     /**

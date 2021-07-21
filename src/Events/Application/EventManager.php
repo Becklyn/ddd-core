@@ -10,14 +10,10 @@ use Becklyn\Ddd\Events\Domain\EventRegistry;
  */
 class EventManager
 {
-    private EventRegistry $eventRegistry;
-
-    private EventBus $eventBus;
-
-    public function __construct(EventRegistry $eventRegistry, EventBus $eventBus)
-    {
-        $this->eventRegistry = $eventRegistry;
-        $this->eventBus = $eventBus;
+    public function __construct(
+        private EventRegistry $eventRegistry,
+        private EventBus $eventBus,
+    ) {
     }
 
     /**

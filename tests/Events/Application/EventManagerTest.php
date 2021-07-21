@@ -15,15 +15,8 @@ class EventManagerTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ObjectProphecy|EventRegistry
-     */
-    private $eventRegistry;
-
-    /**
-     * @var ObjectProphecy|EventBus
-     */
-    private $eventBus;
+    private ObjectProphecy|EventRegistry $eventRegistry;
+    private ObjectProphecy|EventBus $eventBus;
 
     private EventManager $fixture;
 
@@ -34,14 +27,14 @@ class EventManagerTest extends TestCase
         $this->fixture = new EventManager($this->eventRegistry->reveal(), $this->eventBus->reveal());
     }
 
-    public function testClearDequeuesRegistryButDoesNotDispatchToBus()
+    public function testClearDequeuesRegistryButDoesNotDispatchToBus(): void
     {
         $this->eventRegistry->dequeueEvents()->shouldBeCalledTimes(1);
         $this->eventBus->dispatch(Argument::any())->shouldNotBeCalled();
         $this->fixture->clear();
     }
 
-    public function testFlushDequeuesRegistryAndDispatchesDequeuedEventsToBus()
+    public function testFlushDequeuesRegistryAndDispatchesDequeuedEventsToBus(): void
     {
         $event = $this->prophesize(DomainEvent::class)->reveal();
         $this->eventRegistry->dequeueEvents()->willReturn([$event]);

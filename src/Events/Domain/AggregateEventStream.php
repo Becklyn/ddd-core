@@ -11,13 +11,13 @@ use Illuminate\Support\Collection;
  */
 class AggregateEventStream
 {
-    private AggregateId $aggregateId;
     /** @var Collection|DomainEvent[] */
     private Collection $events;
 
-    public function __construct(AggregateId $aggregateId, Collection $events)
-    {
-        $this->aggregateId = $aggregateId;
+    public function __construct(
+        private AggregateId $aggregateId,
+        Collection $events,
+    ) {
         $this->events = $events;
     }
 

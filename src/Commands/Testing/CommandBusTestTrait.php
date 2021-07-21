@@ -12,8 +12,7 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 trait CommandBusTestTrait
 {
-    /** @var ObjectProphecy|CommandBus */
-    protected ObjectProphecy $commandbus;
+    protected ObjectProphecy|CommandBus $commandbus;
 
     protected function initCommandBusTestTrait(): void
     {
