@@ -1,4 +1,4 @@
-201created/ddd is a set of components used by 201Created GmbH for developing software using domain-driven design, event sourcing and CQRS. Support is included for:
+becklyn/ddd-core is a set of components for developing software with domain-driven design, event sourcing and CQRS. Support is included for:
 
 - entity identity
 - domain events and their handling
@@ -15,12 +15,12 @@ The components are designed to facilitate the following workflow:
 - This repeats the "core transaction loop" until all events are resolved and no new commands are initiated, or in other words until eventual consistency is achieved. 
 
 ## Usage
-201created/ddd-core provides the components mostly as abstract classes and interfaces to facilitate use independent of any specific technological infrastructure. Our choice is Symfony with Doctrine and SimpleBus, and we provide implementations tying everything together in the 201created/ddd-doctrine-bridge and 201created/ddd-symfony-bridge libraries. If you wish to use other technologies, you will need to provide your own implementations for the event store and event, transaction and command handling.
+becklyn/ddd-core provides the components mostly as abstract classes and interfaces to facilitate use independent of any specific technological infrastructure. Our choice is Symfony with Doctrine and SimpleBus, and we provide implementations tying everything together in the becklyn/ddd-doctrine-bridge and becklyn/ddd-symfony-bridge libraries. If you wish to use other technologies, you will need to provide your own implementations for the event store and event, transaction and command handling.
 
 ### Core Loop
-Here's a more detailed explanation on how to achieve the 201created/ddd workflow:
+Here's a more detailed explanation on how to achieve the becklyn/ddd-core workflow:
 - Dispatch a command via the `CommandBus`. Commands are plain PHP classes of your own creation, essentially DTOs, and they should contain all the data necessary to perform the desired action. At a minimum, they should contain the identity of the aggregate being manipulated.
-- The `CommandBus` should route the command to its corresponding handler. The implementation provided by 201created/ddd-symfony-bridge does this automatically within a properly configured Symfony application. Otherwise, you will have to ensure this yourself.
+- The `CommandBus` should route the command to its corresponding handler. The implementation provided by becklyn/ddd-symfony-bridge does this automatically within a properly configured Symfony application. Otherwise, you will have to ensure this yourself.
 - Process the command in a handler extending the abstract `CommandHandler` class:
 	- Each command class must have exactly one handler class.
 	- Your handler should have a public method accepting the command as its argument, and the method should call `CommandHandler::handleCommand`.
@@ -30,11 +30,11 @@ Here's a more detailed explanation on how to achieve the 201created/ddd workflow
 		- Return the aggregate fom the `execute` method.
 	- `CommandHandler` will dequeue any events raised by the aggregate returned from `execute`, register them with the `EventRegistry` and commit the transaction through the `TransactionManager`.
 	- Alternatively, a domain service may be called from `execute`. In such cases, the service should use the `EventRegistry` to dequeue and register any events raised by the affected aggregate, and `CommandHandler::execute` should return null.
-- `TransactionManager::commit` should take care of any persistence concerns and call `EventManager::flush`. Similarly, `TransactionManager::rollback` should discard and changes and call `EventManager::clear`. A Doctrine implementation is provided by 201created/ddd-doctrine-bridge.
+- `TransactionManager::commit` should take care of any persistence concerns and call `EventManager::flush`. Similarly, `TransactionManager::rollback` should discard and changes and call `EventManager::clear`. A Doctrine implementation is provided by becklyn/ddd-doctrine-bridge.
 - Flushing the `EventManager` collects all events registered by the `EventRegistry` and dispatches them through the `EventBus`. Clearing the `EventManager` simply discards all events.
-- The `EventBus` should dispatch the events to any subscribers subscribing to them. 201created/ddd-symfony-bridge provides a Symfony/SimpleBus implementation that does this automatically within a properly configured Symfony application.
+- The `EventBus` should dispatch the events to any subscribers subscribing to them. becklyn/ddd-symfony-bridge provides a Symfony/SimpleBus implementation that does this automatically within a properly configured Symfony application.
 - If any other aggregates need to react to changes made to the initial aggregate, subscribe to the relevant events through event subscribers:
-	- Multiple subscribers may subscribe to any single event. It is not recommended that subscribers depend on the order in which they process events, nor that a subscriber should stop the propagation of an event. While we enforce these practices in 201created/ddd-symfony-bridge,  we do not impose any restrictions on your own implementations.
+	- Multiple subscribers may subscribe to any single event. It is not recommended that subscribers depend on the order in which they process events, nor that a subscriber should stop the propagation of an event. While we enforce these practices in becklyn/ddd-symfony-bridge,  we do not impose any restrictions on your own implementations.
 	- The subscribers shouldn't contain any domain logic, but should instead generally only dispatch new commands.
 
 ### Entities, Aggregates and Events
@@ -48,5 +48,5 @@ If using event sourcing, aggregates should use the `EventSourcedProviderCapabili
 
 ## Testing
 We write our PHPUnit/Prophecy unit tests inspired by the BDD workflow of "given/when/then". To test the code interacting with components from this library, we have gathered various given/when/then helper methods into traits. You can find them within the Testing namespaces of individual subdomans present in the library, for example:
-- `C201\Ddd\Commands\Testing\CommandHandlerTestTrait`
-- `C201\Ddd\Events\Testing\DomainEventTestTrait`
+- `Becklyn\Ddd\Commands\Testing\CommandHandlerTestTrait`
+- `Becklyn\Ddd\Events\Testing\DomainEventTestTrait`
