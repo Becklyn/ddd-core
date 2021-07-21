@@ -4,7 +4,6 @@ namespace Becklyn\Ddd\Events\Testing;
 
 use Becklyn\Ddd\Events\Application\EventBus;
 use Becklyn\Ddd\Events\Domain\AggregateEventStream;
-use Becklyn\Ddd\Events\Domain\DomainEvent;
 use Becklyn\Ddd\Events\Domain\EventId;
 use Becklyn\Ddd\Events\Domain\EventProvider;
 use Becklyn\Ddd\Events\Domain\EventRegistry;

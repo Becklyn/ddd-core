@@ -6,7 +6,6 @@ use Becklyn\Ddd\Events\Domain\AggregateEventStream;
 use Becklyn\Ddd\Events\Testing\DomainEventTestTrait;
 use Becklyn\Ddd\Identity\Domain\AbstractAggregateId;
 use Illuminate\Support\Collection;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**

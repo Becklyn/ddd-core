@@ -2,7 +2,6 @@
 namespace Becklyn\Ddd\Tests\Identity\Domain;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Prophecy\ObjectProphecy;
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
 

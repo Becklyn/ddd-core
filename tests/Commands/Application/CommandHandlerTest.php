@@ -4,9 +4,7 @@ namespace Becklyn\Ddd\Tests\Commands\Application;
 
 use Becklyn\Ddd\Commands\Testing\CommandHandlerTestTrait;
 use Becklyn\Ddd\Events\Domain\EventProvider;
-use Becklyn\Ddd\Events\Domain\EventRegistry;
 use Ramsey\Uuid\Uuid;
-use Becklyn\Ddd\Transactions\Application\TransactionManager;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
