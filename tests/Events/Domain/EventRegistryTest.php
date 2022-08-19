@@ -2,6 +2,7 @@
 
 namespace Becklyn\Ddd\Tests\Events\Domain;
 
+use Becklyn\Ddd\Commands\Domain\Command;
 use Becklyn\Ddd\Events\Domain\DomainEvent;
 use Becklyn\Ddd\Events\Domain\EventProvider;
 use Becklyn\Ddd\Events\Domain\EventRegistry;
@@ -28,26 +29,77 @@ class EventRegistryTest extends TestCase
         $this->fixture = new EventRegistry($this->eventStore->reveal());
     }
 
-    public function testRegisterEvent(): void
+    public function testRegisterEventAddsEventToListOfEvents(): void
     {
-        $event = $this->prophesize(DomainEvent::class)->reveal();
+        $event = $this->givenAMockEvent()->reveal();
+        $this->whenEventIsRegistered($event);
+        $this->thenEventShouldHaveBeenAddedToList($event);
+    }
+
+    private function givenAMockEvent () : ObjectProphecy|DomainEvent
+    {
+        return $this->prophesize(DomainEvent::class);
+    }
+
+    private function whenEventIsRegistered (DomainEvent $event) : void
+    {
         $this->fixture->registerEvent($event);
+    }
+
+    private function thenEventShouldHaveBeenAddedToList (DomainEvent $event) : void
+    {
         $events = $this->fixture->dequeueEvents();
         $this->assertCount(1, $events);
         $this->assertSame($event, $events[0]);
+    }
+
+    public function testRegisterEventAppendsEventToEventStore(): void
+    {
+        $event = $this->givenAMockEvent()->reveal();
+        $this->whenEventIsRegistered($event);
+        $this->thenEventShouldHaveBeenAppendedToEventStore($event);
+    }
+
+    private function thenEventShouldHaveBeenAppendedToEventStore (DomainEvent $event) : void
+    {
         $this->eventStore->append($event)->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testDequeueProviderAndRegister(): void
+    public function testDequeueProviderAndRegisterDequeuesEventsFromProviderCorrelatesThemWithCommandAndRegistersThem(): void
     {
-        $event = $this->prophesize(DomainEvent::class)->reveal();
+        $event = $this->givenAMockEvent();
+        $command = $this->givenAMockCommand()->reveal();
+
+        $provider = $this->givenAnEventProviderContainingTheEvent($event->reveal())->reveal();
+
+        $this->whenProviderIsDequeuedAndRegistered($provider, $command);
+
+        $this->thenEventShouldHaveBeenCorrelatedWithCommand($event, $command);
+
+        $this->thenEventShouldHaveBeenAddedToList($event->reveal());
+        $this->thenEventShouldHaveBeenAppendedToEventStore($event->reveal());
+    }
+
+    private function givenAMockCommand () : ObjectProphecy|Command
+    {
+        return $this->prophesize(Command::class);
+    }
+
+    private function givenAnEventProviderContainingTheEvent (DomainEvent $event) : ObjectProphecy|EventProvider
+    {
         /** @var EventProvider|ObjectProphecy $provider */
         $provider = $this->prophesize(EventProvider::class);
         $provider->dequeueEvents()->willReturn([$event]);
-        $this->fixture->dequeueProviderAndRegister($provider->reveal());
-        $events = $this->fixture->dequeueEvents();
-        $this->assertCount(1, $events);
-        $this->assertSame($event, $events[0]);
-        $this->eventStore->append($event)->shouldHaveBeenCalledTimes(1);
+        return $provider;
+    }
+
+    private function whenProviderIsDequeuedAndRegistered (EventProvider $provider, Command $command) : void
+    {
+        $this->fixture->dequeueProviderAndRegister($provider, $command);
+    }
+
+    private function thenEventShouldHaveBeenCorrelatedWithCommand (ObjectProphecy|DomainEvent $event, Command $command) : void
+    {
+        $event->correlateWith($command)->shouldHaveBeenCalledTimes(1);
     }
 }

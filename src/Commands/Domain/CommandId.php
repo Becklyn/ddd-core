@@ -1,22 +1,22 @@
 <?php
 
-namespace Becklyn\Ddd\Events\Domain;
+namespace Becklyn\Ddd\Commands\Domain;
 
 use Becklyn\Ddd\Messages\Domain\MessageId;
 use Webmozart\Assert\Assert;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
- * @since  2019-06-05
+ * @since  2022-08-18
  */
-final class EventId implements MessageId
+final class CommandId implements MessageId
 {
     private function __construct(private string $id)
     {
         Assert::uuid($id);
     }
 
-    public static function fromString(string $id): EventId
+    public static function fromString(string $id): CommandId
     {
         return new self($id);
     }

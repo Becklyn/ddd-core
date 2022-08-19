@@ -2,6 +2,7 @@
 
 namespace Becklyn\Ddd\Tests\Commands\Application;
 
+use Becklyn\Ddd\Commands\Domain\Command;
 use Becklyn\Ddd\Commands\Testing\CommandHandlerTestTrait;
 use Becklyn\Ddd\Events\Domain\EventProvider;
 use Ramsey\Uuid\Uuid;
@@ -39,14 +40,22 @@ class CommandHandlerTest extends TestCase
         $this->thenExecuteIsExecutedForArgument($argument);
     }
 
-    private function givenAnArgument()
+    private function givenAnArgument(): string
     {
-        return Uuid::uuid4();
+        return Uuid::uuid4()->toString();
     }
 
-    private function whenCommandWithArgumentIsHandled($argument): void
+    private function whenCommandWithArgumentIsHandled(CommandHandlerTestCommand|string $argument): void
     {
-        $this->fixture->handle(new CommandHandlerTestCommand($argument));
+        if (is_string($argument)) {
+            $argument = $this->givenACommandWithArgument($argument);
+        }
+        $this->fixture->handle($argument);
+    }
+
+    private function givenACommandWithArgument(string $argument): CommandHandlerTestCommand
+    {
+        return new CommandHandlerTestCommand($argument);
     }
 
     private function thenExecuteIsExecutedForArgument($argument): void
@@ -54,14 +63,16 @@ class CommandHandlerTest extends TestCase
         $this->executeExecutor->execute($argument)->shouldHaveBeenCalledtimes(1);
     }
 
-    public function testEventsAreDequeuedAndRegisteredIfExecuteReturnsEventProvider(): void
+    public function testEventsAreDequeuedCorrelatedAndRegisteredIfExecuteReturnsEventProvider(): void
     {
         $argument = $this->givenAnArgument();
+        $command = $this->givenACommandWithArgument($argument);
+
         $eventProvider = $this->givenExecuteReturnsEventProvider($argument);
 
-        $this->whenCommandWithArgumentIsHandled($argument);
+        $this->whenCommandWithArgumentIsHandled($command);
 
-        $this->thenEventsAreDequeuedAndRegistered($eventProvider);
+        $this->thenEventsAreDequeuedCorrelatedAndRegistered($eventProvider, $command);
     }
 
     private function givenExecuteReturnsEventProvider($argument): EventProvider
@@ -72,9 +83,9 @@ class CommandHandlerTest extends TestCase
         return $eventProvider;
     }
 
-    private function thenEventsAreDequeuedAndRegistered($eventProvider): void
+    private function thenEventsAreDequeuedCorrelatedAndRegistered(EventProvider $eventProvider, Command $command): void
     {
-        $this->eventRegistry->dequeueProviderAndRegister($eventProvider)->shouldHaveBeenCalledTimes(1);
+        $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $command)->shouldHaveBeenCalledTimes(1);
     }
 
     public function testEventsAreNotDequeuedAndRegisteredIfExecuteReturnsNull(): void
@@ -94,7 +105,7 @@ class CommandHandlerTest extends TestCase
 
     private function thenEventsAreNotDequeuedAndRegistered(): void
     {
-        $this->eventRegistry->dequeueProviderAndRegister(Argument::any())->shouldNotHaveBeenCalled();
+        $this->eventRegistry->dequeueProviderAndRegister(Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
     }
 
     public function testTransactionIsBegunAndCommitted(): void
