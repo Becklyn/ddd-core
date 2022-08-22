@@ -2,6 +2,7 @@
 
 namespace Becklyn\Ddd\Events\Domain;
 
+use Becklyn\Ddd\Messages\Domain\MessageTrait;
 use Becklyn\Utilities\Collections\IterableToCollectionConstructionTrait;
 
 /**
@@ -11,6 +12,7 @@ use Becklyn\Utilities\Collections\IterableToCollectionConstructionTrait;
 abstract class AbstractDomainEvent implements DomainEvent
 {
     use IterableToCollectionConstructionTrait;
+    use MessageTrait;
 
     public function __construct(
         protected EventId $id,

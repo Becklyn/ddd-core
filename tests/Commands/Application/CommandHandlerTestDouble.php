@@ -3,6 +3,7 @@
 namespace Becklyn\Ddd\Tests\Commands\Application;
 
 use Becklyn\Ddd\Commands\Application\CommandHandler;
+use Becklyn\Ddd\Commands\Domain\Command;
 use Becklyn\Ddd\Events\Domain\EventProvider;
 
 /**
@@ -25,12 +26,12 @@ class CommandHandlerTestDouble extends CommandHandler
     /**
      * @param CommandHandlerTestCommand $command
      */
-    protected function execute($command): ?EventProvider
+    protected function execute(Command $command): ?EventProvider
     {
         return $this->executeExecutor->execute($command->getArgument());
     }
 
-    protected function postRollback(\Throwable $e, $command): \Throwable
+    protected function postRollback(\Throwable $e, Command $command): \Throwable
     {
         return $this->postRollbackExecutor->execute($e, $command);
     }

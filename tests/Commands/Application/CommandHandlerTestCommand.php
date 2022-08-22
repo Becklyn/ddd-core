@@ -2,16 +2,19 @@
 
 namespace Becklyn\Ddd\Tests\Commands\Application;
 
+use Becklyn\Ddd\Commands\Domain\AbstractCommand;
+
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-06-27
  */
-class CommandHandlerTestCommand
+class CommandHandlerTestCommand extends AbstractCommand
 {
     private $argument;
 
     public function __construct($argument)
     {
+        parent::__construct();
         $this->argument = $argument;
     }
 
