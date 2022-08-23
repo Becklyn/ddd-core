@@ -8,6 +8,7 @@ use Becklyn\Ddd\Events\Domain\EventId;
 use Becklyn\Ddd\Events\Domain\EventProvider;
 use Becklyn\Ddd\Events\Domain\EventRegistry;
 use Becklyn\Ddd\Events\Domain\EventStore;
+use Becklyn\Ddd\Messages\Domain\Message;
 use Ramsey\Uuid\Uuid;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -42,9 +43,10 @@ trait DomainEventTestTrait
     /**
      * @param EventProvider|Argument $eventProvider
      */
-    protected function thenEventRegistryShouldDequeueAndRegister($eventProvider): void
+    protected function thenEventRegistryShouldDequeueAndRegister($eventProvider, Message $correlationMessage = null): void
     {
-        $this->eventRegistry->dequeueProviderAndRegister($eventProvider)->shouldBeCalled();
+        $correlationMessage = $correlationMessage ?? Argument::any();
+        $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $correlationMessage)->shouldBeCalled();
     }
 
     protected function thenEventShouldBeDispatched($event): void
@@ -67,31 +69,35 @@ trait DomainEventTestTrait
         $this->eventBus->dispatch(Argument::any())->shouldNotBeCalled();
     }
 
-    protected function givenEventRegistryDequeuesAndRegisters(EventProvider $eventProvider): void
+    protected function givenEventRegistryDequeuesAndRegisters(EventProvider $eventProvider, Message $correlationMessage = null): void
     {
-        $this->eventRegistry->dequeueProviderAndRegister($eventProvider);
+        $correlationMessage = $correlationMessage ?? Argument::any();
+        $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $correlationMessage);
     }
 
     protected function thenEventRegistryShouldNotDequeueAndRegisterAnything(): void
     {
-        $this->eventRegistry->dequeueProviderAndRegister(Argument::any())->shouldNotBeCalled();
+        $this->eventRegistry->dequeueProviderAndRegister(Argument::any(), Argument::any())->shouldNotBeCalled();
     }
 
-    protected function givenEventRegistryThrowsExceptionOnDequeueAndRegister(EventProvider $eventProvider): \Exception
+    protected function givenEventRegistryThrowsExceptionOnDequeueAndRegister(EventProvider $eventProvider, Message $correlationMessage = null): \Exception
     {
+        $correlationMessage = $correlationMessage ?? Argument::any();
         $exception = new \Exception();
-        $this->eventRegistry->dequeueProviderAndRegister($eventProvider)->willThrow($exception);
+        $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $correlationMessage)->willThrow($exception);
         return $exception;
     }
 
-    protected function thenEventRegistryShouldRegister($event): void
+    protected function thenEventRegistryShouldRegister($event, Message $correlationMessage = null): void
     {
-        $this->eventRegistry->registerEvent($event)->shouldBeCalled();
+        $correlationMessage = $correlationMessage ?? Argument::any();
+        $this->eventRegistry->registerEvent($event, $correlationMessage)->shouldBeCalled();
     }
 
-    protected function thenEventRegistryShouldNotRegister($event): void
+    protected function thenEventRegistryShouldNotRegister($event, Message $correlationMessage = null): void
     {
-        $this->eventRegistry->registerEvent($event)->shouldNotBeCalled();
+        $correlationMessage = $correlationMessage ?? Argument::any();
+        $this->eventRegistry->registerEvent($event, $correlationMessage)->shouldNotBeCalled();
     }
 
     protected function thenEventRegistryShouldNotRegisterAnyEvents(): void

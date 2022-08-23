@@ -23,8 +23,9 @@ class EventRegistry implements EventProvider
     /**
      * Adds a domain event to its list of registered events.
      */
-    public function registerEvent(DomainEvent $event): void
+    public function registerEvent(DomainEvent $event, Message $messageToCorrelateWith): void
     {
+        $event->correlateWith($messageToCorrelateWith);
         $this->raiseEvent($event);
         $this->eventStore->append($event);
     }
@@ -35,8 +36,7 @@ class EventRegistry implements EventProvider
     public function dequeueProviderAndRegister(EventProvider $eventProvider, Message $messageToCorrelateWith): void
     {
         foreach ($eventProvider->dequeueEvents() as $event) {
-            $event->correlateWith($messageToCorrelateWith);
-            $this->registerEvent($event);
+            $this->registerEvent($event, $messageToCorrelateWith);
         }
     }
 }
