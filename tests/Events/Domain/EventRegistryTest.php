@@ -80,7 +80,7 @@ class EventRegistryTest extends TestCase
 
         $this->whenEventIsRegistered($event->reveal(), $command);
         $this->thenEventShouldHaveBeenCorrelatedWithCommand($event, $command);
-        $this->thenEventShouldHaveBeenAddedToList($event);
+        $this->thenEventShouldHaveBeenAddedToList($event->reveal());
     }
 
     private function thenEventShouldBeCorrelatedWithCommandBeforeBeingAppendedToEventStore (ObjectProphecy|DomainEvent $event, Command $command) : void

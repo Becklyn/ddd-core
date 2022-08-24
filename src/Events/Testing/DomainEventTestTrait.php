@@ -16,6 +16,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2019-07-23
+ *
+ * @codeCoverageIgnore
  */
 trait DomainEventTestTrait
 {

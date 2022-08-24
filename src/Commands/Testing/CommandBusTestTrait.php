@@ -9,6 +9,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
  * @since  2020-07-28
+ *
+ * @codeCoverageIgnore
  */
 trait CommandBusTestTrait
 {
