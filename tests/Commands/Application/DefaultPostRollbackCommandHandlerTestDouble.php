@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Commands\Application;
 
@@ -8,6 +8,7 @@ use Becklyn\Ddd\Events\Domain\EventProvider;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-10-19
  */
 class DefaultPostRollbackCommandHandlerTestDouble extends CommandHandler
@@ -17,7 +18,7 @@ class DefaultPostRollbackCommandHandlerTestDouble extends CommandHandler
     ) {
     }
 
-    public function handle(CommandHandlerTestCommand $command): void
+    public function handle(CommandHandlerTestCommand $command) : void
     {
         $this->handleCommand($command);
     }
@@ -25,7 +26,7 @@ class DefaultPostRollbackCommandHandlerTestDouble extends CommandHandler
     /**
      * @param CommandHandlerTestCommand $command
      */
-    protected function execute(Command $command): ?EventProvider
+    protected function execute(Command $command) : ?EventProvider
     {
         return $this->executeExecutor->execute($command->getArgument());
     }

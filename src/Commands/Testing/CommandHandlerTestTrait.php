@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Commands\Testing;
 
@@ -8,6 +8,7 @@ use Becklyn\Ddd\Transactions\Testing\TransactionManagerTestTrait;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-06-27
  */
 trait CommandHandlerTestTrait
@@ -20,13 +21,13 @@ trait CommandHandlerTestTrait
      */
     protected $fixture;
 
-    protected function initCommandHandlerTestTrait(): void
+    protected function initCommandHandlerTestTrait() : void
     {
         $this->initTransactionManagerTestTrait();
         $this->initDomainEventTestTrait();
     }
 
-    protected function commandHandlerPostSetUp(): void
+    protected function commandHandlerPostSetUp() : void
     {
         $this->fixture->setTransactionManager($this->transactionManager->reveal());
         $this->fixture->setEventRegistry($this->eventRegistry->reveal());

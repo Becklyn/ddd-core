@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Domain;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-06-05
  */
 trait EventProviderCapabilities
@@ -15,7 +16,7 @@ trait EventProviderCapabilities
      */
     private array $domainEvents = [];
 
-    protected function raiseEvent(DomainEvent $event): void
+    protected function raiseEvent(DomainEvent $event) : void
     {
         $this->domainEvents[] = $event;
     }
@@ -25,7 +26,7 @@ trait EventProviderCapabilities
      *
      * @return DomainEvent[]
      */
-    public function dequeueEvents(): array
+    public function dequeueEvents() : array
     {
         $events = $this->domainEvents;
         $this->domainEvents = [];

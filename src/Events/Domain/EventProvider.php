@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Domain;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-06-05
  */
 interface EventProvider
@@ -13,5 +14,5 @@ interface EventProvider
      *
      * @return DomainEvent[]
      */
-    public function dequeueEvents(): array;
+    public function dequeueEvents() : array;
 }

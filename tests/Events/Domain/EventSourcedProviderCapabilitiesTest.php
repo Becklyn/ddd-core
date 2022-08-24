@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Events\Domain;
 
@@ -10,13 +10,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-10-19
  */
 class EventSourcedProviderCapabilitiesTest extends TestCase
 {
     use DomainEventTestTrait;
 
-    public function testRaiseAndApplyEventRaisesAndAppliesTheEvent(): void
+    public function testRaiseAndApplyEventRaisesAndAppliesTheEvent() : void
     {
         $fixture = $this->givenAnEventSourcedProvider();
         $this->givenTheEventSourcedProviderStateHasNotBeenChanged($fixture);
@@ -25,34 +26,34 @@ class EventSourcedProviderCapabilitiesTest extends TestCase
         $this->thenEventSourcedProviderCapabilitiesTestEventShouldHaveBeenRaised($fixture);
     }
 
-    private function givenAnEventSourcedProvider(): EventSourcedProviderCapabilitiesTestDouble
+    private function givenAnEventSourcedProvider() : EventSourcedProviderCapabilitiesTestDouble
     {
-        return new EventSourcedProviderCapabilitiesTestDouble;
+        return new EventSourcedProviderCapabilitiesTestDouble();
     }
 
-    private function givenTheEventSourcedProviderStateHasNotBeenChanged(EventSourcedProviderCapabilitiesTestDouble $fixture): void
+    private function givenTheEventSourcedProviderStateHasNotBeenChanged(EventSourcedProviderCapabilitiesTestDouble $fixture) : void
     {
-        $this->assertFalse($fixture->stateChanged());
+        self::assertFalse($fixture->stateChanged());
     }
 
-    private function whenRaiseAndApplyEventSourcedProviderCapabilitiesTestEventIsCalled(EventSourcedProviderCapabilitiesTestDouble $fixture): void
+    private function whenRaiseAndApplyEventSourcedProviderCapabilitiesTestEventIsCalled(EventSourcedProviderCapabilitiesTestDouble $fixture) : void
     {
         $fixture->raiseAndApplyEventSourcedProviderCapabilitiesTestEvent();
     }
 
-    private function thenStateShouldHaveBeenChangedOnTheEventSourcedProvider(EventSourcedProviderCapabilitiesTestDouble $fixture): void
+    private function thenStateShouldHaveBeenChangedOnTheEventSourcedProvider(EventSourcedProviderCapabilitiesTestDouble $fixture) : void
     {
-        $this->assertTrue($fixture->stateChanged());
+        self::assertTrue($fixture->stateChanged());
     }
 
-    private function thenEventSourcedProviderCapabilitiesTestEventShouldHaveBeenRaised(EventSourcedProviderCapabilitiesTestDouble $fixture): void
+    private function thenEventSourcedProviderCapabilitiesTestEventShouldHaveBeenRaised(EventSourcedProviderCapabilitiesTestDouble $fixture) : void
     {
         $events = $fixture->dequeueEvents();
-        $this->assertCount(1, $events);
-        $this->assertContainsOnlyInstancesOf(EventSourcedProviderCapabilitiesTestEvent::class, $events);
+        self::assertCount(1, $events);
+        self::assertContainsOnlyInstancesOf(EventSourcedProviderCapabilitiesTestEvent::class, $events);
     }
 
-    public function testReconstituteAppliesEventsFromStreamButDoesNotRaiseThem(): void
+    public function testReconstituteAppliesEventsFromStreamButDoesNotRaiseThem() : void
     {
         $eventStream = $this->givenAggregateEventStreamContainingEventSourcedProviderCapabilitiesTestEvent();
         $fixture = $this->whenReconsituteIsCalledForTheEventSourcedProviderWithTheEventStream($eventStream);
@@ -60,7 +61,7 @@ class EventSourcedProviderCapabilitiesTest extends TestCase
         $this->thenNoEventsShouldHaveBeenRaisedOnTheEventSourcedProvcider($fixture);
     }
 
-    private function givenAggregateEventStreamContainingEventSourcedProviderCapabilitiesTestEvent(): AggregateEventStream
+    private function givenAggregateEventStreamContainingEventSourcedProviderCapabilitiesTestEvent() : AggregateEventStream
     {
         return new AggregateEventStream(
             $this->getMockForAbstractClass(AbstractAggregateId::class, [], '', false),
@@ -70,17 +71,17 @@ class EventSourcedProviderCapabilitiesTest extends TestCase
 
     private function whenReconsituteIsCalledForTheEventSourcedProviderWithTheEventStream(
         AggregateEventStream $eventStream
-    ): EventSourcedProviderCapabilitiesTestDouble {
+    ) : EventSourcedProviderCapabilitiesTestDouble {
         return EventSourcedProviderCapabilitiesTestDouble::reconstitute($eventStream);
     }
 
-    private function thenTheEventSourcedProviderShouldHaveBeenReconsitutedWithItsStateChanged(EventSourcedProviderCapabilitiesTestDouble $fixture): void
+    private function thenTheEventSourcedProviderShouldHaveBeenReconsitutedWithItsStateChanged(EventSourcedProviderCapabilitiesTestDouble $fixture) : void
     {
-        $this->assertTrue($fixture->stateChanged());
+        self::assertTrue($fixture->stateChanged());
     }
 
-    private function thenNoEventsShouldHaveBeenRaisedOnTheEventSourcedProvcider(EventSourcedProviderCapabilitiesTestDouble $fixture): void
+    private function thenNoEventsShouldHaveBeenRaisedOnTheEventSourcedProvcider(EventSourcedProviderCapabilitiesTestDouble $fixture) : void
     {
-        $this->assertEmpty($fixture->dequeueEvents());
+        self::assertEmpty($fixture->dequeueEvents());
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Events\Domain;
 
@@ -9,21 +9,22 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-04-06
  */
 class AggregateEventStreamTest extends TestCase
 {
-    public function testAggregateIdReturnsAggregateIdPassedToConstructor(): void
+    public function testAggregateIdReturnsAggregateIdPassedToConstructor() : void
     {
         $id = AbstractAggregateTestProxyId::next();
         $stream = new AggregateEventStream($id, Collection::make());
-        $this->assertSame($id, $stream->aggregateId());
+        self::assertSame($id, $stream->aggregateId());
     }
 
-    public function testEventsReturnsEventsCollectionPassedToConstructor(): void
+    public function testEventsReturnsEventsCollectionPassedToConstructor() : void
     {
         $collection = Collection::make();
         $stream = new AggregateEventStream(AbstractAggregateTestProxyId::next(), $collection);
-        $this->assertSame($collection, $stream->events());
+        self::assertSame($collection, $stream->events());
     }
 }

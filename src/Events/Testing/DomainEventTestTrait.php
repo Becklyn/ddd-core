@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Testing;
 
@@ -9,12 +9,13 @@ use Becklyn\Ddd\Events\Domain\EventProvider;
 use Becklyn\Ddd\Events\Domain\EventRegistry;
 use Becklyn\Ddd\Events\Domain\EventStore;
 use Becklyn\Ddd\Messages\Domain\Message;
-use Ramsey\Uuid\Uuid;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-07-23
  *
  * @codeCoverageIgnore
@@ -25,19 +26,19 @@ trait DomainEventTestTrait
     protected ObjectProphecy|EventBus $eventBus;
     protected ObjectProphecy|EventStore $eventStore;
 
-    protected function initDomainEventTestTrait(): void
+    protected function initDomainEventTestTrait() : void
     {
         $this->eventRegistry = $this->prophesize(EventRegistry::class);
         $this->eventBus = $this->prophesize(EventBus::class);
         $this->eventStore = $this->prophesize(EventStore::class);
     }
 
-    protected function givenAnEventId(): EventId
+    protected function givenAnEventId() : EventId
     {
-        return EventId::fromString(Uuid::uuid4());
+        return EventId::fromString(Uuid::uuid4()->toString());
     }
 
-    protected function givenARaisedTs(): \DateTimeImmutable
+    protected function givenARaisedTs() : \DateTimeImmutable
     {
         return new \DateTimeImmutable();
     }
@@ -45,44 +46,44 @@ trait DomainEventTestTrait
     /**
      * @param EventProvider|Argument $eventProvider
      */
-    protected function thenEventRegistryShouldDequeueAndRegister($eventProvider, Message $correlationMessage = null): void
+    protected function thenEventRegistryShouldDequeueAndRegister($eventProvider, ?Message $correlationMessage = null) : void
     {
         $correlationMessage = $correlationMessage ?? Argument::any();
         $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $correlationMessage)->shouldBeCalled();
     }
 
-    protected function thenEventShouldBeDispatched($event): void
+    protected function thenEventShouldBeDispatched($event) : void
     {
         $this->eventBus->dispatch($event)->shouldBeCalled();
     }
 
-    protected function thenEventShouldBeDispatchedTimes($event, int $times): void
+    protected function thenEventShouldBeDispatchedTimes($event, int $times) : void
     {
         $this->eventBus->dispatch($event)->shouldBeCalledTimes($times);
     }
 
-    protected function thenEventShouldNotBeDispatched($event): void
+    protected function thenEventShouldNotBeDispatched($event) : void
     {
         $this->eventBus->dispatch($event)->shouldNotBeCalled();
     }
 
-    protected function thenNoEventsShouldBeDispatched(): void
+    protected function thenNoEventsShouldBeDispatched() : void
     {
         $this->eventBus->dispatch(Argument::any())->shouldNotBeCalled();
     }
 
-    protected function givenEventRegistryDequeuesAndRegisters(EventProvider $eventProvider, Message $correlationMessage = null): void
+    protected function givenEventRegistryDequeuesAndRegisters(EventProvider $eventProvider, ?Message $correlationMessage = null) : void
     {
         $correlationMessage = $correlationMessage ?? Argument::any();
         $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $correlationMessage);
     }
 
-    protected function thenEventRegistryShouldNotDequeueAndRegisterAnything(): void
+    protected function thenEventRegistryShouldNotDequeueAndRegisterAnything() : void
     {
         $this->eventRegistry->dequeueProviderAndRegister(Argument::any(), Argument::any())->shouldNotBeCalled();
     }
 
-    protected function givenEventRegistryThrowsExceptionOnDequeueAndRegister(EventProvider $eventProvider, Message $correlationMessage = null): \Exception
+    protected function givenEventRegistryThrowsExceptionOnDequeueAndRegister(EventProvider $eventProvider, ?Message $correlationMessage = null) : \Exception
     {
         $correlationMessage = $correlationMessage ?? Argument::any();
         $exception = new \Exception();
@@ -90,29 +91,29 @@ trait DomainEventTestTrait
         return $exception;
     }
 
-    protected function thenEventRegistryShouldRegister($event, Message $correlationMessage = null): void
+    protected function thenEventRegistryShouldRegister($event, ?Message $correlationMessage = null) : void
     {
         $correlationMessage = $correlationMessage ?? Argument::any();
         $this->eventRegistry->registerEvent($event, $correlationMessage)->shouldBeCalled();
     }
 
-    protected function thenEventRegistryShouldNotRegister($event, Message $correlationMessage = null): void
+    protected function thenEventRegistryShouldNotRegister($event, ?Message $correlationMessage = null) : void
     {
         $correlationMessage = $correlationMessage ?? Argument::any();
         $this->eventRegistry->registerEvent($event, $correlationMessage)->shouldNotBeCalled();
     }
 
-    protected function thenEventRegistryShouldNotRegisterAnyEvents(): void
+    protected function thenEventRegistryShouldNotRegisterAnyEvents() : void
     {
         $this->thenEventRegistryShouldNotRegister(Argument::any());
     }
 
-    protected function thenEventStoreShouldAppend($event): void
+    protected function thenEventStoreShouldAppend($event) : void
     {
         $this->eventStore->append($event)->shouldBeCalled();
     }
 
-    protected function thenEventStoreShouldReturnAggregateEventStream(AggregateEventStream $aggregateEventStream): void
+    protected function thenEventStoreShouldReturnAggregateEventStream(AggregateEventStream $aggregateEventStream) : void
     {
         $this->eventStore->getAggregateStream($aggregateEventStream->aggregateId())->willReturn($aggregateEventStream);
     }

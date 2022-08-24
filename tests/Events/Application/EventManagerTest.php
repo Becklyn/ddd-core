@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Events\Application;
 
@@ -20,21 +20,21 @@ class EventManagerTest extends TestCase
 
     private EventManager $fixture;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         $this->eventRegistry = $this->prophesize(EventRegistry::class);
         $this->eventBus = $this->prophesize(EventBus::class);
         $this->fixture = new EventManager($this->eventRegistry->reveal(), $this->eventBus->reveal());
     }
 
-    public function testClearDequeuesRegistryButDoesNotDispatchToBus(): void
+    public function testClearDequeuesRegistryButDoesNotDispatchToBus() : void
     {
         $this->eventRegistry->dequeueEvents()->shouldBeCalledTimes(1);
         $this->eventBus->dispatch(Argument::any())->shouldNotBeCalled();
         $this->fixture->clear();
     }
 
-    public function testFlushDequeuesRegistryAndDispatchesDequeuedEventsToBus(): void
+    public function testFlushDequeuesRegistryAndDispatchesDequeuedEventsToBus() : void
     {
         $event = $this->prophesize(DomainEvent::class)->reveal();
         $this->eventRegistry->dequeueEvents()->willReturn([$event]);

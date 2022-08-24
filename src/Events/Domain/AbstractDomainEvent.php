@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Domain;
 
@@ -7,6 +7,7 @@ use Becklyn\Utilities\Collections\IterableToCollectionConstructionTrait;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-06-05
  */
 abstract class AbstractDomainEvent implements DomainEvent
@@ -20,12 +21,12 @@ abstract class AbstractDomainEvent implements DomainEvent
     ) {
     }
 
-    public function id(): EventId
+    public function id() : EventId
     {
         return $this->id;
     }
 
-    public function raisedTs(): \DateTimeImmutable
+    public function raisedTs() : \DateTimeImmutable
     {
         return $this->raisedTs;
     }

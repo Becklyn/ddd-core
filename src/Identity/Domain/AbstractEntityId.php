@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Identity\Domain;
 
@@ -7,6 +7,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-10-19
  */
 abstract class AbstractEntityId implements EntityId
@@ -17,28 +18,28 @@ abstract class AbstractEntityId implements EntityId
         Assert::uuid($id);
     }
 
-    public static function fromString(string $id): static
+    public static function fromString(string $id) : static
     {
-        return new static($id);
+        return new static($id); // @phpstan-ignore-line
     }
 
-    public static function next(): static
+    public static function next() : static
     {
-        return new static(Uuid::uuid4());
+        return new static(Uuid::uuid4()->toString()); // @phpstan-ignore-line
     }
 
-    public function asString(): string
+    public function asString() : string
     {
         return $this->id;
     }
 
-    public function equals(EntityId $other): bool
+    public function equals(EntityId $other) : bool
     {
-        return $this->id === $other->asString() && get_class($this) === get_class($other);
+        return $this->id === $other->asString() && static::class === \get_class($other);
     }
 
-    public function entityType(): string
+    public function entityType() : string
     {
-        return substr(get_class($this), 0, -2);
+        return \substr(static::class, 0, -2);
     }
 }

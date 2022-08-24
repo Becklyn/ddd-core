@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Domain;
 
@@ -7,6 +7,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-06-05
  */
 final class EventId implements MessageId
@@ -16,12 +17,12 @@ final class EventId implements MessageId
         Assert::uuid($id);
     }
 
-    public static function fromString(string $id): EventId
+    public static function fromString(string $id) : self
     {
         return new self($id);
     }
 
-    public function asString(): string
+    public function asString() : string
     {
         return $this->id;
     }

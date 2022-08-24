@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Domain;
 
@@ -9,6 +9,7 @@ use Becklyn\Ddd\Messages\Domain\Message;
  * registry and dispatch all registered events to an event bus after the application transaction is committed.
  *
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-06-05
  */
 class EventRegistry implements EventProvider
@@ -23,7 +24,7 @@ class EventRegistry implements EventProvider
     /**
      * Adds a domain event to its list of registered events.
      */
-    public function registerEvent(DomainEvent $event, Message $messageToCorrelateWith): void
+    public function registerEvent(DomainEvent $event, Message $messageToCorrelateWith) : void
     {
         $event->correlateWith($messageToCorrelateWith);
         $this->raiseEvent($event);
@@ -33,7 +34,7 @@ class EventRegistry implements EventProvider
     /**
      * Dequeues an EventProvider and registers all of its events.
      */
-    public function dequeueProviderAndRegister(EventProvider $eventProvider, Message $messageToCorrelateWith): void
+    public function dequeueProviderAndRegister(EventProvider $eventProvider, Message $messageToCorrelateWith) : void
     {
         foreach ($eventProvider->dequeueEvents() as $event) {
             $this->registerEvent($event, $messageToCorrelateWith);

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Commands\Domain;
 
@@ -7,6 +7,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2022-08-18
  */
 class AbstractCommand implements Command
@@ -26,7 +27,7 @@ class AbstractCommand implements Command
         $this->causationType = $this->correlationType;
     }
 
-    public function id(): CommandId
+    public function id() : CommandId
     {
         return $this->id;
     }

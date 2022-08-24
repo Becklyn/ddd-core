@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Becklyn\Ddd\Tests\Identity\Domain;
 
 use PHPUnit\Framework\TestCase;
@@ -7,66 +8,67 @@ use Webmozart\Assert\Assert;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-04-06
  */
 class AbstractAggregateIdTest extends TestCase
 {
-    public function testFromStringReturnsInstanceWithPassedUuidAsId(): void
+    public function testFromStringReturnsInstanceWithPassedUuidAsId() : void
     {
-        $uuid = Uuid::uuid4();
+        $uuid = Uuid::uuid4()->toString();
         $id = AbstractAggregateTestProxyId::fromString($uuid);
-        $this->assertEquals($uuid, $id->asString());
+        self::assertEquals($uuid, $id->asString());
     }
 
-    public function testFromStringThrowsExceptionIfNonUuidStringIsPassed(): void
+    public function testFromStringThrowsExceptionIfNonUuidStringIsPassed() : void
     {
         $this->expectException(\Exception::class);
         AbstractAggregateTestProxyId::fromString('foo');
     }
 
-    public function testNextReturnsInstanceWithUuidAsId(): void
+    public function testNextReturnsInstanceWithUuidAsId() : void
     {
         $id = AbstractAggregateTestProxyId::next();
         Assert::uuid($id->asString());
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
-    public function testEqualsReturnsTrueIfOtherHasSameIdAndIsOfSameClass(): void
+    public function testEqualsReturnsTrueIfOtherHasSameIdAndIsOfSameClass() : void
     {
         $id = AbstractAggregateTestProxyId::next();
         $id2 = AbstractAggregateTestProxyId::fromString($id->asString());
-        $this->assertTrue($id->equals($id2));
+        self::assertTrue($id->equals($id2));
     }
 
-    public function testEqualsReturnsFalseIfOtherHasOtherIdAndIsOfSameClass(): void
+    public function testEqualsReturnsFalseIfOtherHasOtherIdAndIsOfSameClass() : void
     {
         $id = AbstractAggregateTestProxyId::next();
         $id2 = AbstractAggregateTestProxyId::next();
-        $this->assertFalse($id->equals($id2));
+        self::assertFalse($id->equals($id2));
     }
 
-    public function testEqualsReturnsFalseIfOtherHasSameIdAndIsOfDifferentClass(): void
+    public function testEqualsReturnsFalseIfOtherHasSameIdAndIsOfDifferentClass() : void
     {
         $id = AbstractAggregateTestProxyId::next();
         $id2 = AbstractAggregateTestProxy2Id::fromString($id->asString());
-        $this->assertFalse($id->equals($id2));
+        self::assertFalse($id->equals($id2));
     }
 
-    public function testEntityTypeReturnsFullyQualifiedClassNameOfAggregate(): void
+    public function testEntityTypeReturnsFullyQualifiedClassNameOfAggregate() : void
     {
         $id = AbstractAggregateTestProxyId::next();
-        $this->assertEquals(AbstractAggregateTestProxy::class, $id->entityType());
+        self::assertEquals(AbstractAggregateTestProxy::class, $id->entityType());
     }
 
-    public function testAggregateTypeReturnsFullyQualifiedClassNameOfAggregate(): void
+    public function testAggregateTypeReturnsFullyQualifiedClassNameOfAggregate() : void
     {
         $id = AbstractAggregateTestProxyId::next();
-        $this->assertEquals(AbstractAggregateTestProxy::class, $id->aggregateType());
+        self::assertEquals(AbstractAggregateTestProxy::class, $id->aggregateType());
     }
 
-    public function testAggregateTypeReturnsSamevalueAsEntityType(): void
+    public function testAggregateTypeReturnsSamevalueAsEntityType() : void
     {
         $id = AbstractAggregateTestProxyId::next();
-        $this->assertEquals($id->aggregateType(), $id->entityType());
+        self::assertEquals($id->aggregateType(), $id->entityType());
     }
 }

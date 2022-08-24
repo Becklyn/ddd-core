@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Events\Domain;
 
@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2019-11-20
  */
 class AggregateEventStream
@@ -21,7 +22,7 @@ class AggregateEventStream
         $this->events = $events;
     }
 
-    public function aggregateId(): AggregateId
+    public function aggregateId() : AggregateId
     {
         return $this->aggregateId;
     }
@@ -29,7 +30,7 @@ class AggregateEventStream
     /**
      * @return Collection|DomainEvent[]
      */
-    public function events(): Collection
+    public function events() : Collection
     {
         return $this->events;
     }

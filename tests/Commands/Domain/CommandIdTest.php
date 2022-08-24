@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Commands\Domain;
 
@@ -8,18 +8,19 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2022-08-19
  */
 class CommandIdTest extends TestCase
 {
-    public function testFromStringAcceptsUuid(): void
+    public function testFromStringAcceptsUuid() : void
     {
-        $uuid = Uuid::uuid4();
+        $uuid = Uuid::uuid4()->toString();
         $id = CommandId::fromString($uuid);
-        $this->assertEquals($uuid, $id->asString());
+        self::assertEquals($uuid, $id->asString());
     }
 
-    public function testFromStringThrowsExceptionForNonUuid(): void
+    public function testFromStringThrowsExceptionForNonUuid() : void
     {
         $notUuid = 'foo';
         $this->expectException(\Exception::class);

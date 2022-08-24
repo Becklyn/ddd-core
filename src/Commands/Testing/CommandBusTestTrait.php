@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Commands\Testing;
 
@@ -8,6 +8,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-07-28
  *
  * @codeCoverageIgnore
@@ -16,27 +17,27 @@ trait CommandBusTestTrait
 {
     protected ObjectProphecy|CommandBus $commandbus;
 
-    protected function initCommandBusTestTrait(): void
+    protected function initCommandBusTestTrait() : void
     {
         $this->commandbus = $this->prophesize(CommandBus::class);
     }
 
-    protected function thenCommandBusShouldDispatch($command): void
+    protected function thenCommandBusShouldDispatch($command) : void
     {
         $this->commandbus->dispatch($command)->shouldBeCalled();
     }
 
-    protected function thenCommandBusShouldNotDispatch($command): void
+    protected function thenCommandBusShouldNotDispatch($command) : void
     {
         $this->commandbus->dispatch($command)->shouldNotBeCalled();
     }
 
-    protected function thenCommandBusShouldNotDispatchAnyCommands(): void
+    protected function thenCommandBusShouldNotDispatchAnyCommands() : void
     {
         $this->thenCommandBusShouldNotDispatch(Argument::any());
     }
 
-    protected function givenCommandBusThrowsExceptionWhenDispatching($command, \Exception $exception): void
+    protected function givenCommandBusThrowsExceptionWhenDispatching($command, \Exception $exception) : void
     {
         $this->commandbus->dispatch($command)->willThrow($exception);
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Commands\Domain;
 
@@ -7,6 +7,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2022-08-18
  */
 final class CommandId implements MessageId
@@ -16,12 +17,12 @@ final class CommandId implements MessageId
         Assert::uuid($id);
     }
 
-    public static function fromString(string $id): CommandId
+    public static function fromString(string $id) : self
     {
         return new self($id);
     }
 
-    public function asString(): string
+    public function asString() : string
     {
         return $this->id;
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Events\Domain;
 
@@ -14,6 +14,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2020-04-06
  */
 class EventRegistryTest extends TestCase
@@ -24,13 +25,13 @@ class EventRegistryTest extends TestCase
 
     private EventRegistry $fixture;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         $this->eventStore = $this->prophesize(EventStore::class);
         $this->fixture = new EventRegistry($this->eventStore->reveal());
     }
 
-    public function testRegisterEventAddsEventToListOfEvents(): void
+    public function testRegisterEventAddsEventToListOfEvents() : void
     {
         $event = $this->givenAMockEvent()->reveal();
         $this->whenEventIsRegistered($event, $this->givenAMockCommand()->reveal());
@@ -55,11 +56,11 @@ class EventRegistryTest extends TestCase
     private function thenEventShouldHaveBeenAddedToList (DomainEvent $event) : void
     {
         $events = $this->fixture->dequeueEvents();
-        $this->assertCount(1, $events);
-        $this->assertSame($event, $events[0]);
+        self::assertCount(1, $events);
+        self::assertSame($event, $events[0]);
     }
 
-    public function testRegisterEventAppendsEventToEventStore(): void
+    public function testRegisterEventAppendsEventToEventStore() : void
     {
         $event = $this->givenAMockEvent()->reveal();
         $this->whenEventIsRegistered($event, $this->givenAMockCommand()->reveal());
@@ -86,9 +87,9 @@ class EventRegistryTest extends TestCase
     private function thenEventShouldBeCorrelatedWithCommandBeforeBeingAppendedToEventStore (ObjectProphecy|DomainEvent $event, Command $command) : void
     {
         $eventStore = $this->eventStore;
-        $event->correlateWith($command)->will(function () use ($eventStore, $event) {
+        $event->correlateWith($command)->will(function () use ($eventStore, $event) : void {
             $eventStore->append($event->reveal())->shouldBeCalledOnce();
-            return;
+
         });
     }
 
@@ -97,7 +98,7 @@ class EventRegistryTest extends TestCase
         $event->correlateWith($command)->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testDequeueProviderAndRegisterDequeuesEventsFromProviderCorrelatesThemWithCommandAndRegistersThem(): void
+    public function testDequeueProviderAndRegisterDequeuesEventsFromProviderCorrelatesThemWithCommandAndRegistersThem() : void
     {
         $event = $this->givenAMockEvent();
         $command = $this->givenAMockCommand()->reveal();

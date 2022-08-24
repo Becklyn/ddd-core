@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Commands\Application;
 
 use Becklyn\Ddd\Commands\Domain\Command;
 use Becklyn\Ddd\Commands\Testing\CommandHandlerTestTrait;
 use Becklyn\Ddd\Events\Domain\EventProvider;
-use Ramsey\Uuid\Uuid;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
+use Ramsey\Uuid\Uuid;
 
 class CommandHandlerTest extends TestCase
 {
@@ -22,7 +22,7 @@ class CommandHandlerTest extends TestCase
     /** @var CommandHandlerTestDouble */
     protected $fixture;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         $this->initCommandHandlerTestTrait();
         $this->executeExecutor = $this->prophesize(CommandHandlerTestExecuteExecutor::class);
@@ -31,7 +31,7 @@ class CommandHandlerTest extends TestCase
         $this->commandHandlerPostSetUp();
     }
 
-    public function testExecuteIsExecutedForArgument(): void
+    public function testExecuteIsExecutedForArgument() : void
     {
         $argument = $this->givenAnArgument();
 
@@ -40,30 +40,30 @@ class CommandHandlerTest extends TestCase
         $this->thenExecuteIsExecutedForArgument($argument);
     }
 
-    private function givenAnArgument(): string
+    private function givenAnArgument() : string
     {
         return Uuid::uuid4()->toString();
     }
 
-    private function whenCommandWithArgumentIsHandled(CommandHandlerTestCommand|string $argument): void
+    private function whenCommandWithArgumentIsHandled(CommandHandlerTestCommand|string $argument) : void
     {
-        if (is_string($argument)) {
+        if (\is_string($argument)) {
             $argument = $this->givenACommandWithArgument($argument);
         }
         $this->fixture->handle($argument);
     }
 
-    private function givenACommandWithArgument(string $argument): CommandHandlerTestCommand
+    private function givenACommandWithArgument(string $argument) : CommandHandlerTestCommand
     {
         return new CommandHandlerTestCommand($argument);
     }
 
-    private function thenExecuteIsExecutedForArgument($argument): void
+    private function thenExecuteIsExecutedForArgument($argument) : void
     {
         $this->executeExecutor->execute($argument)->shouldHaveBeenCalledtimes(1);
     }
 
-    public function testEventsAreDequeuedCorrelatedAndRegisteredIfExecuteReturnsEventProvider(): void
+    public function testEventsAreDequeuedCorrelatedAndRegisteredIfExecuteReturnsEventProvider() : void
     {
         $argument = $this->givenAnArgument();
         $command = $this->givenACommandWithArgument($argument);
@@ -75,7 +75,7 @@ class CommandHandlerTest extends TestCase
         $this->thenEventsAreDequeuedCorrelatedAndRegistered($eventProvider, $command);
     }
 
-    private function givenExecuteReturnsEventProvider($argument): EventProvider
+    private function givenExecuteReturnsEventProvider($argument) : EventProvider
     {
         /** @var EventProvider $eventProvider */
         $eventProvider = $this->prophesize(EventProvider::class)->reveal();
@@ -83,12 +83,12 @@ class CommandHandlerTest extends TestCase
         return $eventProvider;
     }
 
-    private function thenEventsAreDequeuedCorrelatedAndRegistered(EventProvider $eventProvider, Command $command): void
+    private function thenEventsAreDequeuedCorrelatedAndRegistered(EventProvider $eventProvider, Command $command) : void
     {
         $this->eventRegistry->dequeueProviderAndRegister($eventProvider, $command)->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testEventsAreNotDequeuedAndRegisteredIfExecuteReturnsNull(): void
+    public function testEventsAreNotDequeuedAndRegisteredIfExecuteReturnsNull() : void
     {
         $argument = $this->givenAnArgument();
         $this->givenExecuteReturnsNull($argument);
@@ -98,17 +98,17 @@ class CommandHandlerTest extends TestCase
         $this->thenEventsAreNotDequeuedAndRegistered();
     }
 
-    private function givenExecuteReturnsNull($argument): void
+    private function givenExecuteReturnsNull($argument) : void
     {
         $this->executeExecutor->execute($argument)->willReturn(null);
     }
 
-    private function thenEventsAreNotDequeuedAndRegistered(): void
+    private function thenEventsAreNotDequeuedAndRegistered() : void
     {
         $this->eventRegistry->dequeueProviderAndRegister(Argument::any(), Argument::any())->shouldNotHaveBeenCalled();
     }
 
-    public function testTransactionIsBegunAndCommitted(): void
+    public function testTransactionIsBegunAndCommitted() : void
     {
         $argument = $this->givenAnArgument();
 
@@ -118,17 +118,17 @@ class CommandHandlerTest extends TestCase
         $this->thenTransactionIsCommitted();
     }
 
-    private function thenTransactionIsBegun(): void
+    private function thenTransactionIsBegun() : void
     {
         $this->transactionManager->begin()->shouldHaveBeenCalledTimes(1);
     }
 
-    private function thenTransactionIsCommitted(): void
+    private function thenTransactionIsCommitted() : void
     {
         $this->transactionManager->commit()->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testCallingCodeExpectsExceptionIfExecuteThrowsException(): void
+    public function testCallingCodeExpectsExceptionIfExecuteThrowsException() : void
     {
         $argument = $this->givenAnArgument();
         $exception = $this->givenExecuteThrowsException($argument);
@@ -139,24 +139,24 @@ class CommandHandlerTest extends TestCase
         $this->whenCommandWithArgumentIsHandled($argument);
     }
 
-    private function givenExecuteThrowsException($argument): \Exception
+    private function givenExecuteThrowsException($argument) : \Exception
     {
         $exception = new \Exception('An Exception');
         $this->executeExecutor->execute($argument)->willThrow($exception);
         return $exception;
     }
 
-    private function givenPostRollbackSimplyPassesExceptionThrough($exception): void
+    private function givenPostRollbackSimplyPassesExceptionThrough($exception) : void
     {
         $this->postRollbackExecutor->execute($exception, Argument::any())->willReturn($exception);
     }
 
-    private function thenCallingCodeExpectsException($exception): void
+    private function thenCallingCodeExpectsException($exception) : void
     {
         $this->expectExceptionObject($exception);
     }
 
-    public function testCallingCodeExpectsExceptionIfExecuteThrowsExceptionAndHandlerHasInheritedPostRollback(): void
+    public function testCallingCodeExpectsExceptionIfExecuteThrowsExceptionAndHandlerHasInheritedPostRollback() : void
     {
         $this->fixture = new DefaultPostRollbackCommandHandlerTestDouble($this->executeExecutor->reveal());
         $this->commandHandlerPostSetUp();
@@ -167,7 +167,7 @@ class CommandHandlerTest extends TestCase
         $this->whenCommandWithArgumentIsHandled($argument);
     }
 
-    public function testNoEventsAreDequeuedAndRegisteredIfExecuteThrowsException(): void
+    public function testNoEventsAreDequeuedAndRegisteredIfExecuteThrowsException() : void
     {
         $argument = $this->givenAnArgument();
         $exception = $this->givenExecuteThrowsException($argument);
@@ -181,7 +181,7 @@ class CommandHandlerTest extends TestCase
         $this->thenEventsAreNotDequeuedAndRegistered();
     }
 
-    public function testTransactionIsRolledBackIfExecuteThrowsException(): void
+    public function testTransactionIsRolledBackIfExecuteThrowsException() : void
     {
         $argument = $this->givenAnArgument();
         $exception = $this->givenExecuteThrowsException($argument);
@@ -195,12 +195,12 @@ class CommandHandlerTest extends TestCase
         $this->thenTransactionIsRolledBack();
     }
 
-    private function thenTransactionIsRolledBack(): void
+    private function thenTransactionIsRolledBack() : void
     {
         $this->transactionManager->rollback()->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testPostRollbackIsExecutedForExceptionIfExecuteThrowsException(): void
+    public function testPostRollbackIsExecutedForExceptionIfExecuteThrowsException() : void
     {
         $argument = $this->givenAnArgument();
         $exception = $this->givenExecuteThrowsException($argument);
@@ -214,43 +214,43 @@ class CommandHandlerTest extends TestCase
         $this->thenPostRollbackIsExecutedForException($exception);
     }
 
-    private function thenPostRollbackIsExecutedForException($exception): void
+    private function thenPostRollbackIsExecutedForException($exception) : void
     {
         $this->postRollbackExecutor->execute($exception, Argument::any())->shouldHaveBeenCalledTimes(1);
     }
 
-    public function testCallingCodeExpectsNewExceptionIfPostRollbackThrowsNewException(): void
+    public function testCallingCodeExpectsNewExceptionIfPostRollbackThrowsNewException() : void
     {
         $argument = $this->givenAnArgument();
         $exception = $this->givenExecuteThrowsException($argument);
         $newException = $this->givenPostRollbackThrowsNewException($exception);
-        $this->assertNotSame($exception, $newException);
+        self::assertNotSame($exception, $newException);
 
         $this->thenCallingCodeExpectsException($newException);
 
         $this->whenCommandWithArgumentIsHandled($argument);
     }
 
-    private function givenPostRollbackThrowsNewException($exception): \Exception
+    private function givenPostRollbackThrowsNewException($exception) : \Exception
     {
         $newException = new \Exception('Neeeew exception');
         $this->postRollbackExecutor->execute($exception, Argument::any())->willThrow($newException);
         return $newException;
     }
 
-    public function testCallingCodeExpectsNewExceptionIfPostRollbackReturnsNewException(): void
+    public function testCallingCodeExpectsNewExceptionIfPostRollbackReturnsNewException() : void
     {
         $argument = $this->givenAnArgument();
         $exception = $this->givenExecuteThrowsException($argument);
         $newException = $this->givenPostRollbackReturnsNewException($exception);
-        $this->assertNotSame($exception, $newException);
+        self::assertNotSame($exception, $newException);
 
         $this->thenCallingCodeExpectsException($newException);
 
         $this->whenCommandWithArgumentIsHandled($argument);
     }
 
-    private function givenPostRollbackReturnsNewException($exception): \Exception
+    private function givenPostRollbackReturnsNewException($exception) : \Exception
     {
         $newException = new \Exception('Neeeew exception');
         $this->postRollbackExecutor->execute($exception, Argument::any())->willReturn($newException);

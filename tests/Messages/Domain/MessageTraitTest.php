@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Becklyn\Ddd\Tests\Messages\Domain;
 
@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
+ *
  * @since  2022-08-19
  */
 class MessageTraitTest extends TestCase
@@ -25,7 +26,7 @@ class MessageTraitTest extends TestCase
      *
      * @dataProvider provideCorrelationIds
      */
-    public function testCorrelationIdReturnsCorrelationIdOfMessageWithWhichTheFixtureWasCorrelated($correlationId): void
+    public function testCorrelationIdReturnsCorrelationIdOfMessageWithWhichTheFixtureWasCorrelated($correlationId) : void
     {
         $message = $this->givenAMessageWithCorrelationId($correlationId);
 
@@ -36,7 +37,7 @@ class MessageTraitTest extends TestCase
         $this->thenCorrelationIdShouldReturn($fixture, $correlationId);
     }
 
-    protected function provideCorrelationIds(): array
+    protected function provideCorrelationIds() : array
     {
         return [
             [EventId::fromString(Uuid::uuid4()->toString())],
@@ -44,7 +45,7 @@ class MessageTraitTest extends TestCase
         ];
     }
 
-    private function givenAMessageWithCorrelationId(MessageId $correlationId): Message
+    private function givenAMessageWithCorrelationId(MessageId $correlationId) : Message
     {
         /** @var ObjectProphecy|Message $message */
         $message = $this->prophesize(Message::class);
@@ -53,24 +54,24 @@ class MessageTraitTest extends TestCase
         return $message->reveal();
     }
 
-    private function whenFixtureIsCorrelatedWithMessage(MessageTraitTestDouble $fixture, Message $message): void
+    private function whenFixtureIsCorrelatedWithMessage(MessageTraitTestDouble $fixture, Message $message) : void
     {
         $fixture->correlateWith($message);
     }
 
-    private function thenCorrelationIdShouldReturn(MessageTraitTestDouble $fixture, MessageId $expectedCorrelationId): void
+    private function thenCorrelationIdShouldReturn(MessageTraitTestDouble $fixture, MessageId $expectedCorrelationId) : void
     {
-        $this->assertEquals($expectedCorrelationId, $fixture->correlationId());
+        self::assertEquals($expectedCorrelationId, $fixture->correlationId());
     }
 
-    public function testCorrelationIdThrowsCorrelationExceptionIfFixtureWasNotYetCorrelated(): void
+    public function testCorrelationIdThrowsCorrelationExceptionIfFixtureWasNotYetCorrelated() : void
     {
         $fixture = new MessageTraitTestDouble();
         $this->expectException(CorrelationException::class);
         $fixture->correlationId();
     }
 
-    public function testCorrelationIdThrowsCorrelationExceptionIfCorrelationIdIsOfAnUnsupportedType(): void
+    public function testCorrelationIdThrowsCorrelationExceptionIfCorrelationIdIsOfAnUnsupportedType() : void
     {
         $correlationId = $this->givenAnUnsupportedMessageId();
         $message = $this->givenAMessageWithCorrelationId($correlationId);
@@ -81,12 +82,12 @@ class MessageTraitTest extends TestCase
         $this->thenExceptionShouldBeThrownOn(CorrelationException::class, fn() => $fixture->correlationId());
     }
 
-    private function givenAnUnsupportedMessageId(): MessageId
+    private function givenAnUnsupportedMessageId() : MessageId
     {
         return new MessageTraitTestUnsupportedId();
     }
 
-    private function thenExceptionShouldBeThrownOn(string $exceptionClass, callable $action): void
+    private function thenExceptionShouldBeThrownOn(string $exceptionClass, callable $action) : void
     {
         $this->expectException($exceptionClass);
         $action();
@@ -97,7 +98,7 @@ class MessageTraitTest extends TestCase
      *
      * @dataProvider provideCorrelationIds
      */
-    public function testCausationIdReturnsIdOfMessageWithWhichTheFixtureWasCorrelated($messageId): void
+    public function testCausationIdReturnsIdOfMessageWithWhichTheFixtureWasCorrelated($messageId) : void
     {
         $message = $this->givenAMessageWithId($messageId);
 
@@ -117,19 +118,19 @@ class MessageTraitTest extends TestCase
         return $message->reveal();
     }
 
-    private function thenCausationIdShouldReturn(MessageTraitTestDouble $fixture, MessageId $expectedCausationId): void
+    private function thenCausationIdShouldReturn(MessageTraitTestDouble $fixture, MessageId $expectedCausationId) : void
     {
-        $this->assertEquals($expectedCausationId, $fixture->causationId());
+        self::assertEquals($expectedCausationId, $fixture->causationId());
     }
 
-    public function testCausationIdThrowsCorrelationExceptionIfFixtureWasNotYetCorrelated(): void
+    public function testCausationIdThrowsCorrelationExceptionIfFixtureWasNotYetCorrelated() : void
     {
         $fixture = new MessageTraitTestDouble();
         $this->expectException(CorrelationException::class);
         $fixture->causationId();
     }
 
-    public function testCausationIdThrowsCorrelationExceptionIfCausationIdIsOfAnUnsupportedType(): void
+    public function testCausationIdThrowsCorrelationExceptionIfCausationIdIsOfAnUnsupportedType() : void
     {
         $causationId = $this->givenAnUnsupportedMessageId();
         $message = $this->givenAMessageWithId($causationId);
