@@ -2,6 +2,7 @@
 =======
 
 * (bc) Added support for correlation and causation IDs on events and commands.
+* (feature) Added support for illuminate/collections ^9.0
 
 2.0.0
 =======
