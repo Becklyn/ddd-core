@@ -1,3 +1,8 @@
+3.1.0
+=======
+
+* (feature) CommandBus can now correlate commands with a given message.
+
 3.0.0
 =======
 

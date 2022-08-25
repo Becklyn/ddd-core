@@ -24,12 +24,17 @@ trait CommandBusTestTrait
 
     protected function thenCommandBusShouldDispatch($command) : void
     {
-        $this->commandbus->dispatch($command)->shouldBeCalled();
+        $this->commandbus->dispatch($command, Argument::any())->shouldBeCalled();
+    }
+
+    protected function thenCommandBusShouldDispatchAndCorrelateWith($command, $correlateWith) : void
+    {
+        $this->commandbus->dispatch($command, $correlateWith)->shouldBeCalled();
     }
 
     protected function thenCommandBusShouldNotDispatch($command) : void
     {
-        $this->commandbus->dispatch($command)->shouldNotBeCalled();
+        $this->commandbus->dispatch($command, Argument::any())->shouldNotBeCalled();
     }
 
     protected function thenCommandBusShouldNotDispatchAnyCommands() : void
@@ -39,6 +44,6 @@ trait CommandBusTestTrait
 
     protected function givenCommandBusThrowsExceptionWhenDispatching($command, \Exception $exception) : void
     {
-        $this->commandbus->dispatch($command)->willThrow($exception);
+        $this->commandbus->dispatch($command, Argument::any())->willThrow($exception);
     }
 }

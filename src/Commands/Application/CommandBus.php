@@ -3,6 +3,7 @@
 namespace Becklyn\Ddd\Commands\Application;
 
 use Becklyn\Ddd\Commands\Domain\Command;
+use Becklyn\Ddd\Messages\Domain\Message;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
@@ -11,5 +12,5 @@ use Becklyn\Ddd\Commands\Domain\Command;
  */
 interface CommandBus
 {
-    public function dispatch(Command $command) : void;
+    public function dispatch(Command $command, ?Message $correlateWith = null) : void;
 }
