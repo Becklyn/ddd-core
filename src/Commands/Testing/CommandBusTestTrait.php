@@ -24,17 +24,18 @@ trait CommandBusTestTrait
 
     protected function thenCommandBusShouldDispatch($command) : void
     {
-        $this->commandbus->dispatch($command, Argument::any())->shouldBeCalled();
+        $this->commandbus->dispatch($command)->shouldBeCalled();
     }
 
     protected function thenCommandBusShouldDispatchAndCorrelateWith($command, $correlateWith) : void
     {
-        $this->commandbus->dispatch($command, $correlateWith)->shouldBeCalled();
+        $this->commandbus->dispatchAndCorrelate($command, $correlateWith)->shouldBeCalled();
     }
 
     protected function thenCommandBusShouldNotDispatch($command) : void
     {
-        $this->commandbus->dispatch($command, Argument::any())->shouldNotBeCalled();
+        $this->commandbus->dispatch($command)->shouldNotBeCalled();
+        $this->commandbus->dispatchAndCorrelate($command, Argument::any())->shouldNotBeCalled();
     }
 
     protected function thenCommandBusShouldNotDispatchAnyCommands() : void
@@ -44,6 +45,12 @@ trait CommandBusTestTrait
 
     protected function givenCommandBusThrowsExceptionWhenDispatching($command, \Exception $exception) : void
     {
-        $this->commandbus->dispatch($command, Argument::any())->willThrow($exception);
+        $this->commandbus->dispatch($command)->willThrow($exception);
+        $this->commandbus->dispatchAndCorrelate($command, Argument::any())->willThrow($exception);
+    }
+
+    protected function givenCommandBusThrowsExceptionWhenDispatchingAndCorrelating($command, $correlateWith, \Exception $exception) : void
+    {
+        $this->commandbus->dispatchAndCorrelate($command, $correlateWith)->willThrow($exception);
     }
 }

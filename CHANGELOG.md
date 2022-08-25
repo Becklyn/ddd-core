@@ -1,3 +1,8 @@
+4.0.0
+=======
+
+* (bc) Separated CommandBus interface into a method which correlates and a method which does not correlate commands.
+
 3.1.0
 =======
 

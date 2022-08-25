@@ -12,5 +12,7 @@ use Becklyn\Ddd\Messages\Domain\Message;
  */
 interface CommandBus
 {
-    public function dispatch(Command $command, ?Message $correlateWith = null) : void;
+    public function dispatch(Command $command) : void;
+
+    public function dispatchAndCorrelate(Command $command, Message $correlateWith) : void;
 }
