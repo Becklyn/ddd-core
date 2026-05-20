@@ -1,3 +1,9 @@
+4.1.0
+=======
+
+* (feature) Added support for Symfony 7.4 (raised PHP minimum to 8.2, added illuminate/collections ^10.0 and ^11.0 support).
+* (feature) Updated PHPUnit to ^10.5 || ^11.0 and phpspec/prophecy-phpunit to ^2.2.
+
 4.0.0
 =======
 
