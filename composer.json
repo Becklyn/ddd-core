@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=8.2",
-        "becklyn/utilities": "^2.0",
+        "becklyn/utilities": "^3.0",
         "ramsey/uuid": "^4.0",
         "illuminate/collections": "^8.12 || ^9.0 || ^10.0 || ^11.0",
         "webmozart/assert": "^1.9"
