@@ -1,3 +1,9 @@
+4.2.0
+=======
+
+* (fix) Replaced the legacy `@required` docblock annotations on `CommandHandler::setTransactionManager()` and `CommandHandler::setEventRegistry()` with the `#[Required]` attribute. Symfony removed docblock `@required` support in 7.0, so on Symfony 7 the setters were never called and every command handler failed with "Typed property ... must not be accessed before initialization".
+* (improvement) Added `symfony/service-contracts` to `require`, which provides the `#[Required]` attribute.
+
 4.1.0
 =======
 
