@@ -6,6 +6,7 @@ use Becklyn\Ddd\Commands\Domain\Command;
 use Becklyn\Ddd\Events\Domain\EventProvider;
 use Becklyn\Ddd\Events\Domain\EventRegistry;
 use Becklyn\Ddd\Transactions\Application\TransactionManager;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * @author Marko Vujnovic <mv@becklyn.com>
@@ -17,17 +18,13 @@ abstract class CommandHandler
     private TransactionManager $transactionManager; // @phpstan-ignore-line
     protected EventRegistry $eventRegistry; // @phpstan-ignore-line
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setTransactionManager(TransactionManager $transactionManager) : void
     {
         $this->transactionManager = $transactionManager;
     }
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setEventRegistry(EventRegistry $eventRegistry) : void
     {
         $this->eventRegistry = $eventRegistry;
